@@ -1,25 +1,63 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="MenuItems">
   <head>
     <title>Narrow Down Your Menu Choice</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="styles/bootstrap.min.css">-->
     <link rel="stylesheet" href="styles/styles.css">
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
   </head>
 <body>
-   <div class="container">
+   <div class="container-fluid">
     <h1>Narrow Down Your Chinese Menu Choice</h1>
-
-    <div class="form-group">
-      <input type="text" placeholder="search term" class="form-control">
+    <div class="row">
+      <div class="col-md-6">
+        <div ng-controller="GetRequestedMenuController as getMenu">
+          <div class="row">
+            <div class="form-group col-xs-6">
+              <input type="text" placeholder="search term" class="form-control" ng-model="getMenu.requestedStr">
+            </div>
+            <div class="form-group narrow-button col-xs-6">
+              <button class="btn btn-primary" ng-click="getMenu.requestItems()">Narrow It Down For Me!</button>
+            </div>  
+          </div>
+          <div>
+            <ol>
+              <div class="row" ng-repeat="item in getMenu.foundItems track by $index" ng-if="getMenu.foundItems">
+                <div class="col-8">
+                  <li class="list-group-item" data-toggle="tooltip" >{{item}} </li>
+                </div>
+                <div class="col-4">
+                  <button class="btn btn-danger" ng-click="getMenu.removeItem($index);">Don't want this one!</button>
+                </div>
+              </div>
+              <div ng-if="getMenu.foundItems == 0" class="alert alert-danger" role="alert">Nothing Found</div>
+            </ol>
+          </div>
+      </div>
+        <!-- found-items should be implemented as a component -->
+        <!-- <found-items found-items="...." on-remove="...."></found-items> -->
+      </div>
+      <div class="col-md-6">
+        <div ng-controller="AllMenuItemsController as menuItems">
+          <ul class="list-group">
+            <li class="list-group-item active">Entire Chinese Menu</li>
+            <li class="list-group-item" data-toggle="tooltip" ng-repeat="item in menuItems.items" title="{{item.description}}}"> {{ item.name }}</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div class="form-group narrow-button">
-      <button class="btn btn-primary">Narrow It Down For Me!</button>
-    </div>
-
-    <!-- found-items should be implemented as a component -->
-    <found-items found-items="...." on-remove="...."></found-items>
   </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+  <script type="text/javascript">
 
+    $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
 </body>
 </html>
