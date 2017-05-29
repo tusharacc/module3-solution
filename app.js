@@ -2,7 +2,22 @@
     angular.module('MenuItems', [])
     .controller('AllMenuItemsController', AllMenuItemsController)
     .controller('GetRequestedMenuController', GetRequestedMenuController)
-    .service('GetMenuItemsService',GetMenuItemsService);
+    .service('GetMenuItemsService',GetMenuItemsService)
+    .directive('listItems',ListItems);
+    
+    
+    
+    function ListItems(){
+        var ddo = {
+            templateUrl: 'ListItem.html',
+            scope: {
+                menuItems: "=myItem"
+            }
+        };
+        
+        return ddo;
+    }
+    
     
     GetRequestedMenuController.$inject=['GetMenuItemsService'];
     function GetRequestedMenuController(GetMenuItemsService){
@@ -50,7 +65,7 @@
         service.getRequestedItems = function(requestedStr){
             for (i=0;i<menu_items.length;i++){
                 if (menu_items[i].name.toLowerCase().indexOf(requestedStr.toLowerCase()) >= 0){
-                    requestedItems.push(menu_items[i].name);
+                    requestedItems.push(menu_items[i]);
                 }
             }
             return requestedItems;

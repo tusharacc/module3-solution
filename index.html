@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" ng-app="MenuItems">
   <head>
-    <title>Narrow Down Your Menu Choice</title>
+    <title>Narrow Down Your Menu Choice</small></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <!--<link rel="stylesheet" href="styles/bootstrap.min.css">-->
@@ -25,9 +25,11 @@
           </div>
           <div>
             <ol>
+              <li class="list-group-item active" ng-if="getMenu.foundItems"><h6><small>Hover over menu to get more details</small></h6></li>
               <div class="row" ng-repeat="item in getMenu.foundItems track by $index" ng-if="getMenu.foundItems">
                 <div class="col-8">
-                  <li class="list-group-item" data-toggle="tooltip" >{{item}} </li>
+                  <li class="list-group-item" data-toggle="tooltip" title="Description: {{item.description}} \n Short Name: {{item.short_name}} " >{{item.name}} </li>
+                  <!--<list-items my-item="getMenu"></list-items>-->
                 </div>
                 <div class="col-4">
                   <button class="btn btn-danger" ng-click="getMenu.removeItem($index);">Don't want this one!</button>
@@ -44,7 +46,8 @@
         <div ng-controller="AllMenuItemsController as menuItems">
           <ul class="list-group">
             <li class="list-group-item active">Entire Chinese Menu</li>
-            <li class="list-group-item" data-toggle="tooltip" ng-repeat="item in menuItems.items" title="{{item.description}}}"> {{ item.name }}</li>
+            <!--<li class="list-group-item" data-toggle="tooltip"  title="{{item.description}}}"> {{ item.name }}</li>-->
+            <list-items my-item="menuItems"></list-items>
           </ul>
         </div>
       </div>
@@ -55,9 +58,9 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <script type="text/javascript">
 
-    $(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-    });
+   $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip(); 
+   });
   </script>
 </body>
 </html>
